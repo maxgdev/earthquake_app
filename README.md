@@ -3,7 +3,7 @@
 Flutter US Earthquake Mapping App sung Google Maps
 
 ## Credits
-- [Packt Publishing] ()
+- [Packt Publishing] (https://www.packtpub.com/)
 - https://app.quicktype.io/
 - https://jsonformatter.curiousconcept.com/
 - http://jsonplaceholder.typicode.com/
