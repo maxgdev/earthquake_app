@@ -10,7 +10,7 @@ class Network {
      final response = await get(Uri.encodeFull(apiUrl));
             
      if (response.statusCode == 200) {
-        print("EarthQuake data: ${response.body}");
+        // print("EarthQuake data: ${response.body}");
         return EarthQuake.fromJson(json.decode(response.body));
      }else {
         throw Exception("Error getting quakes");

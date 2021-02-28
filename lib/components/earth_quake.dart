@@ -19,23 +19,35 @@ class _EarthQuakeAppState extends State<EarthQuakeApp> {
   // Set List of markers to empty, zero
   List<Marker> _markerList = <Marker>[];
   double _zoomVal = 5.0; // Initial zoom value
-
+   
   // set initState
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // get earthquake from json API
     _earthQuakeData = Network().getAllQuakes();
-    if (_earthQuakeData == null) {
-      print(_earthQuakeData);
-    }
+
+    _earthQuakeData.then((value) =>
+        {print("Place: ${value.features[0].properties.place}")});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Making http request to API..."),
+    return Scaffold(
+      body: Stack(
+        children: [
+          _displayGoogleMap(context),
+        ],
+      ),
     );
   }
 }
+  Widget _displayGoogleMap( context) {
+    return Container(
+      child: GoogleMap(
+          mapType: MapType.normal,
+          onMapCreated: null,
+          initialCameraPosition: CameraPosition(target: LatLng(51.4932646936, -0.1214661808), zoom: 5.0),
+        )
+    );
+  }
