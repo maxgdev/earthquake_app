@@ -19,7 +19,11 @@ class _EarthQuakeAppState extends State<EarthQuakeApp> {
   // Set List of markers to empty, zero
   List<Marker> _markerList = <Marker>[];
   double _zoomVal = 5.0; // Initial zoom value
-   
+  // LatLng _initialPos = LatLng(51.4932646936, -0.1214661808);
+  // Houses of Parliament ?? Duh no Earth Quakes in the UK
+  // Also Data is US data? Double Duuuuhhh!!
+  LatLng _initialPos = LatLng(60.0212, -153.0017);
+
   // set initState
   @override
   void initState() {
@@ -27,8 +31,8 @@ class _EarthQuakeAppState extends State<EarthQuakeApp> {
     // get earthquake from json API
     _earthQuakeData = Network().getAllQuakes();
 
-    _earthQuakeData.then((value) =>
-        {print("Place: ${value.features[0].properties.place}")});
+    _earthQuakeData.then(
+        (value) => {print("Place: ${value.features[0].properties.place}")});
   }
 
   @override
@@ -39,15 +43,50 @@ class _EarthQuakeAppState extends State<EarthQuakeApp> {
           _displayGoogleMap(context),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // print("Buttonpressed");
+          getEarthQuakes();
+        },
+        label: Text("Show EarthQuakes"),
+        icon: Icon(Icons.map_sharp),
+      ),
     );
+  }
+
+  void getEarthQuakes() {
+    setState(() {
+      _markerList.clear(); // Empty/Reset the marker List
+      _getQuakesData();
+    });
+  }
+
+  void _getQuakesData() {
+    setState(() {
+    // TODO
+    });
+      _earthQuakeData.then((value) => {
+        print(value.features[0].id),
+        print(value.features[0].properties.mag.toString()),
+        print(value.features[0].properties.title),
+        print(value.features[0].geometry.coordinates[1]),
+        print(value.features[0].geometry.coordinates[0]),
+      });
+  }
+
+  Widget _displayGoogleMap(context) {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: GoogleMap(
+          mapType: MapType.normal,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+          initialCameraPosition:
+              CameraPosition(target: _initialPos, zoom: _zoomVal),
+          // marker List initially empty
+          // markers: Set<Marker>.of(_markerList),
+        ));
   }
 }
-  Widget _displayGoogleMap( context) {
-    return Container(
-      child: GoogleMap(
-          mapType: MapType.normal,
-          onMapCreated: null,
-          initialCameraPosition: CameraPosition(target: LatLng(51.4932646936, -0.1214661808), zoom: 5.0),
-        )
-    );
-  }
