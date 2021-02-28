@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,6 +23,14 @@ class _SimpleMapState extends State<SimpleMap> {
     mapController = controller;
   }
 
+  final CameraPosition parliamentPosition = 
+  CameraPosition(target: _fav4,tilt: 45, zoom: 12);
+  
+  Future _gotoParliament() async {
+    final GoogleMapController controller = await mapController;
+    controller.animateCamera(CameraUpdate.newCameraPosition(parliamentPosition));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +38,18 @@ class _SimpleMapState extends State<SimpleMap> {
           title: Text(widget.title),
         ),
         body: GoogleMap(
-          markers: {buckinghamPalace, parliamentMarker},
-          mapType: MapType.terrain,
+          markers: {buckinghamPalace, parliamentMarker}, // Set of Objects NOT List of Objects
+          mapType: MapType.normal,
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(target: _fav1, zoom: 5.0),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: _gotoParliament, 
+          label: Text("Goto Parliament"),
+          icon: Icon(Icons.place),          
+          ),
+      
+      );
   }
 
   Marker buckinghamPalace = Marker(
