@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
       title: 'Earthquake Mapping App',
       // home: SimpleMap(title:"Earthquake Mapping App"),
       home: EarthQuakeApp(),
-      // home: QuakesApp(),
     );
   }
 }

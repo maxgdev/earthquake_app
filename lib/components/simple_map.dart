@@ -38,7 +38,7 @@ class _SimpleMapState extends State<SimpleMap> {
           title: Text(widget.title),
         ),
         body: GoogleMap(
-          markers: {buckinghamPalace, parliamentMarker}, // Set of Objects NOT List of Objects
+          markers: {buckinghamPalace, parliamentMarker, silverstoneMarker}, // Set of Objects NOT List of Objects
           mapType: MapType.normal,
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(target: _fav1, zoom: 5.0),
